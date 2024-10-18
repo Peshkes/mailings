@@ -1,8 +1,5 @@
-import TelegramBot from 'node-telegram-bot-api';
 import fs from 'fs';
-import config from '../api/config.js';
-
-const bot = new TelegramBot(config, {polling: false});
+import bot from "../api/telegramBot/botConfig.js";
 
 export const sendTelegramMessage = async (chatId, message, mediaPath = null) => {
     try {

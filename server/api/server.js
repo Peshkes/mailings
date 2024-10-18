@@ -53,4 +53,6 @@ server.get('/connect', (req, res) => {
     });
 });
 
+bot.startPolling();
+
 export default server;
