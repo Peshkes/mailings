@@ -1,0 +1,12 @@
+# Project exclude paths
+/out/
+
+# Node modules
+/node_modules/
+
+# Build artifacts
+/public/
+
+# Data
+server/api/db/dev.mailing.db3
+server/api/db/seeds/dev_test_seeds.js
