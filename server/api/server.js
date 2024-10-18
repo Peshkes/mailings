@@ -7,7 +7,6 @@ import utilityRoutes from '../routes/utilityRouter.js';
 import cron from 'node-cron';
 import { sendScheduledMessages } from '../services/sendingService.js';
 import emitter from "./emmiter.js";
-import bot from "./telegramBot/botConfig.js";
 
 cron.schedule('* * * * *', async () => {
     console.log('Checking for scheduled messages...');
@@ -52,7 +51,5 @@ server.get('/connect', (req, res) => {
         res.end();
     });
 });
-
-bot.startPolling();
 
 export default server;
