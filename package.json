@@ -31,6 +31,8 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/maker-dmg": "^7.5.0",
+    "@electron-forge/plugin-webpack": "^7.5.0",
     "@electron-forge/maker-deb": "^7.5.0",
     "@electron-forge/maker-rpm": "^7.5.0",
     "@electron-forge/maker-squirrel": "^7.5.0",
@@ -64,8 +66,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@electron-forge/maker-dmg": "^7.5.0",
-    "@electron-forge/plugin-webpack": "^7.5.0",
     "browserify-fs": "^1.0.0",
     "date-fns": "^4.1.0",
     "electron-squirrel-startup": "^1.0.1",

@@ -5,8 +5,40 @@ import server from "../server/api/server.js";
 
 let serverInstance;
 
-//const __dirname = new URL('.', import.meta.url).pathname;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+async function gateCreateWindowWithLicense(createWindow) {
+    const gateWindow = new BrowserWindow({
+        // resizable: false,
+        frame: false,
+        width: 420,
+        height: 200,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'),
+            devTools: true,
+        },
+    })
+
+    gateWindow.loadFile(path.join(__dirname, './gate/gate.html'));
+
+    ipcMain.on('GATE_SUBMIT', async (_event, { key }) => {
+        console.log('sd')
+        gateWindow.close()
+
+        const HOST = 'localhost';
+        const PORT = process.env.PORT || 49152;
+
+        serverInstance = server.listen(PORT, () => {
+            console.log(`Server started at ${HOST}:${PORT}`);
+        })
+
+        createWindow()
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
+    })
+}
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -46,21 +78,7 @@ ipcMain.on('quit', () => {
 });
 
 
-app.whenReady().then(() => {
-
-    const HOST = 'localhost';
-    const PORT = process.env.PORT || 49152;
-
-    serverInstance = server.listen(PORT, () => {
-        console.log(`Server started at ${HOST}:${PORT}`);
-    })
-
-    createWindow();
-
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
-});
+app.whenReady().then(() => gateCreateWindowWithLicense(createWindow));
 
 app.on('window-all-closed', () => {
     serverInstance.close();
