@@ -47,7 +47,9 @@ async function gateCreateWindowWithLicense(createWindow) {
         const result = await validateLicenseKey(key);
 
         if (result.error) {
-            electronAlert('Ошибка', result.error);
+            electronAlert('Ошибка', result.error).then(
+                () => app.quit()
+            );
         } else {
             electronAlert('Успешно', "Ваша лицензия действительна до " + new Date(result.expired_at).toString())
                 .then(() => {

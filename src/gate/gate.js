@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     const gate = document.getElementById('license-gate');
+    const loader = document.getElementById('loader');
 
     const savedKey = localStorage.getItem('licenseKey');
     if (savedKey) {
@@ -16,6 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('licenseKey', key);
 
+        loader.style.display = 'flex';
         window.electron.ipcRenderer.sendWithBody('GATE_SUBMIT', { key });
     });
-});
+})
