@@ -1,7 +1,8 @@
 {
   "name": "mailings",
+  "productName": "Mailing App",
   "version": "1.0.0",
-  "description": "Small-little mailing app",
+  "description": "Mailing app for telegram/whatsapp bot mailings",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -16,69 +17,97 @@
   "type": "module",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./src/assets/vp"
+      },
       "makers": [
         {
-          "name": "@electron-forge/maker-zip",
+          "name": "@electron-addons/electron-forge-maker-nsis",
           "config": {
-            "platforms": [
-              "win32"
-            ]
+            "setupIcon": "./src/assets/vp.ico",
+            "authors": "VP Ltd.",
+            "description": "An example of a working mailing app for mailing mailings"
           }
         }
       ]
     }
   },
-  "devDependencies": {
-    "@electron-forge/cli": "^7.5.0",
-    "@electron-forge/maker-deb": "^7.5.0",
-    "@electron-forge/maker-rpm": "^7.5.0",
-    "@electron-forge/maker-squirrel": "^7.5.0",
-    "@electron-forge/maker-zip": "^7.5.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
-    "@electron-forge/plugin-fuses": "^7.4.0",
-    "@electron/fuses": "^1.8.0",
-    "@types/react": "^18.3.4",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.20",
+  "build": {
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false,
+      "displayLanguageSelector": false,
+      "unicode": true,
+      "shortcutName": "VP Mailing App",
+      "warningsAsErrors": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "menuCategory": false
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "something.png"
+    }
+  },
+  "dependencies": {
     "axios": "^1.7.5",
+    "browserify-fs": "^1.0.0",
     "cors": "^2.8.5",
-    "css-loader": "^7.1.2",
-    "electron": "^32.0.1",
+    "date-fns": "^4.1.0",
+    "electron-squirrel-startup": "^1.0.1",
     "express": "^4.19.2",
-    "form-data": "^4.0.0",
+    "file-loader": "^6.2.0",
     "helmet": "^7.1.0",
-    "html-webpack-plugin": "^5.6.0",
     "knex": "^3.1.0",
     "node-cron": "^3.0.3",
     "node-telegram-bot-api": "^0.66.0",
-    "postcss": "^8.4.41",
-    "postcss-loader": "^8.1.1",
-    "sqlite3": "^5.1.7",
-    "style-loader": "^4.0.0",
-    "tailwind-scrollbar": "^3.1.0",
-    "tailwindcss": "^3.4.10",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.5.4",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
-    "@electron-forge/maker-dmg": "^7.5.0",
-    "@electron-forge/plugin-webpack": "^7.5.0",
-    "browserify-fs": "^1.0.0",
-    "date-fns": "^4.1.0",
-    "electron-squirrel-startup": "^1.0.1",
-    "file-loader": "^6.2.0",
-    "nodemon": "^3.1.4",
-    "path-browserify": "^1.0.1",
     "react": "^18.3.1",
     "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.26.1",
+    "sqlite3": "^5.1.7",
     "stream-browserify": "^3.0.0",
+    "style-loader": "^4.0.0",
+    "tailwind-scrollbar": "^3.1.0",
     "util": "^0.12.5",
     "zustand": "^5.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@electron-addons/electron-forge-maker-nsis": "^7.0.2",
+    "@electron-forge/cli": "^7.5.0",
+    "@electron-forge/maker-deb": "^7.5.0",
+    "@electron-forge/maker-dmg": "^7.5.0",
+    "@electron-forge/maker-rpm": "^7.5.0",
+    "@electron-forge/maker-zip": "^7.5.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron-forge/plugin-webpack": "^7.5.0",
+    "@electron/fuses": "^1.8.0",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "css-loader": "^7.1.2",
+    "electron": "^32.0.1",
+    "html-webpack-plugin": "^5.6.0",
+    "nodemon": "^3.1.4",
+    "postcss": "^8.4.41",
+    "postcss-loader": "^8.1.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   }
 }

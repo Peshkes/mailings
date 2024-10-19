@@ -8,7 +8,7 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
+      name: "@electron-addons/electron-forge-maker-nsis",
       config: {},
     },
     {
@@ -23,6 +23,7 @@ module.exports = {
       name: '@electron-forge/maker-rpm',
       config: {},
     },
+
   ],
   plugins: [
     {
