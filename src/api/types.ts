@@ -109,7 +109,6 @@ export type ClientType = {
 export type Settings = {
     telegram: string;
     whatsapp: string;
-    licence: string;
 }
 
 

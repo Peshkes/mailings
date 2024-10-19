@@ -28,7 +28,6 @@ export async function getSettings() {
         return {
             telegram: settingsMap.telegram || '',
             whatsapp: settingsMap.whatsapp || '',
-            licence: settingsMap.licence || ''
         };
     } catch (err) {
         throw new Error(`Failed to retrieve settings: ${err.message}`);
@@ -37,7 +36,7 @@ export async function getSettings() {
 
 export async function updateSettings(settings) {
     try {
-        const keysToUpdate = ['telegram', 'whatsapp', 'licence'];
+        const keysToUpdate = ['telegram', 'whatsapp'];
         let updatedFields = [];
 
         const currentSettings = await db('settings').select('*');

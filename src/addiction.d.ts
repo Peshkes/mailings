@@ -7,6 +7,7 @@ declare global {
             openFile: () => Promise<string[]>;
             ipcRenderer: {
                 send: (channel: string) => void;
+                sendWithBody: (channel: string, body: any) => void;
                 receive: (channel: string, func: (...args: any[]) => void) => void;
             };
             process: typeof process;

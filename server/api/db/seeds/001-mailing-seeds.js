@@ -16,6 +16,5 @@ export const seed = async function (knex) {
     await knex('settings').insert([
         {key: 'telegram', value: null},
         {key: 'whatsapp', value: null},
-        {key: 'licence', value: null}
     ]);
 };
