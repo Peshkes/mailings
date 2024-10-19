@@ -33,7 +33,6 @@ const electronAlert = async (title, message) => {
 async function gateCreateWindowWithLicense(createWindow) {
     const gateWindow = new BrowserWindow({
         resizable: false,
-        frame: false,
         width: 420,
         height: 200,
         webPreferences: {
@@ -137,8 +136,5 @@ app.whenReady().then(() => gateCreateWindowWithLicense(createWindow));
 
 app.on('window-all-closed', () => {
     serverInstance.close();
-    if (process.platform !== 'darwin') {
-        serverInstance.close();
-        app.quit();
-    }
+    app.quit();
 });
