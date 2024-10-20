@@ -15,7 +15,7 @@ const DateTimePicker = ({ checkDate, setCheckDate, defaultHours }: DateTimePicke
     useEffect(() => {
         if (!checkDate) {
             const defaultDate = new Date();
-            defaultHours && defaultDate.setHours(defaultHours, 0, 0, 0);
+            // defaultHours && defaultDate.setHours(defaultHours, 0, 0, 0);
             setCheckDate(defaultDate);
         }
     }, [checkDate, setCheckDate]);
@@ -26,13 +26,13 @@ const DateTimePicker = ({ checkDate, setCheckDate, defaultHours }: DateTimePicke
             selected={checkDate}
             onChange={(date) => date && setCheckDate(date)}
             showTimeSelect
-            timeIntervals={60}
+            timeIntervals={defaultHours?60:1}
             timeCaption="Время"
             dateFormat="Pp"
             locale={ru}
             timeFormat="HH:mm"
             calendarStartDay={1}
-            className={`w-full border border-cyan-800/40 rounded-md focus:ring-2 focus:ring-cyan-800 focus:border-cyan-500 transition duration-200`}
+            className={`w-full pl-1 border border-cyan-800/40 rounded-md focus:ring-2 focus:ring-cyan-800 focus:border-cyan-500 transition duration-200`}
             calendarClassName="bg-white border border-cyan-800 rounded-lg"
             dayClassName={() => 'rounded-md hover:bg-cyan-100 transition duration-200'}
             popperClassName="z-10"

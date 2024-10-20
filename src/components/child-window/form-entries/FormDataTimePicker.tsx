@@ -16,7 +16,7 @@ const FormDataTimePicker = ({label, value, onChange, defaultHours, children}: Fo
             {label}
         </label>
         <div className={`flex items-center col-span-2 ${children ? 'space-x-2' : ''}`}>
-            <DataTimePicker checkDate={value} setCheckDate={onChange} defaultHours={defaultHours}/>
+            <DataTimePicker  checkDate={value} setCheckDate={onChange} defaultHours={defaultHours} />
             {children && (
                 <div className="min-w-[80px] flex items-center">
                     {children}
