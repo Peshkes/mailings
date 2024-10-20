@@ -6,10 +6,6 @@
     opacity: 0.6;
 }
 
-.react-datepicker-wrapper {
-    width: 100%;
-}
-
-.react-datepicker__inputGroup {
+.react-datepicker-wrapper, .react-datepicker__inputGroup {
     width: 100%;
 }
