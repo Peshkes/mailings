@@ -58,7 +58,7 @@ export const down = async knex => {
     await knex.schema.dropTableIfExists('messages');
     await knex.schema.dropTableIfExists('clients');
     await knex.schema.dropTableIfExists('client_types');
-    await knex.schema.dropTableIfExists('messangers');
+    await knex.schema.dropTableIfExists('messengers');
     await knex.schema.dropTableIfExists('samples');
     await knex.schema.dropTableIfExists('settings');
 };

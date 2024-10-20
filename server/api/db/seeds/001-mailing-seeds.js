@@ -2,6 +2,10 @@ export const seed = async function (knex) {
     await knex('client_types').truncate();
     await knex('messengers').truncate();
     await knex('settings').truncate();
+    await knex('clients').truncate();
+    await knex('messages').truncate();
+    await knex('samples').truncate();
+
 
     await knex('client_types').insert([
         {type_name: 'Взрослые'},

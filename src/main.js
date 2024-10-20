@@ -34,7 +34,7 @@ async function gateCreateWindowWithLicense(createWindow) {
     const gateWindow = new BrowserWindow({
         resizable: false,
         width: 420,
-        height: 200,
+        height: 300,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
         },
@@ -71,6 +71,11 @@ async function gateCreateWindowWithLicense(createWindow) {
     })
 }
 
+const closeService = () => {
+    if (serverInstance) serverInstance.close();
+    app.quit();
+}
+
 const createWindow = (key) => {
     const mainWindow = new BrowserWindow({
         width: 1250,
@@ -84,6 +89,7 @@ const createWindow = (key) => {
         },
     });
 
+
     mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
 
     const timing = 6 * 60 * 60 * 1000;
@@ -93,8 +99,7 @@ const createWindow = (key) => {
                 .then(res => {
                     if (res.error) {
                         electronAlert('Ошибка', res.error).then(() => {
-                            serverInstance.close();
-                            app.quit();
+                            closeService();
                         });
                     } else {
                         const nowTimestamp = Date.now();
@@ -121,20 +126,17 @@ ipcMain.handle('dialog:openFile', async () => {
 });
 
 ipcMain.on('restart', () => {
-    serverInstance.close();
     app.relaunch();
-    app.quit();
+    closeService();
 });
 
 ipcMain.on('quit', () => {
-    serverInstance.close();
-    app.quit();
+    closeService();
 });
 
 
 app.whenReady().then(() => gateCreateWindowWithLicense(createWindow));
 
 app.on('window-all-closed', () => {
-    serverInstance.close();
-    app.quit();
+    closeService();
 });

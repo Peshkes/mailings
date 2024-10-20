@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {addClient, deleteClientById, getClientById, updateClient} from "../../../api/server";
-import {dateToTimestamp, stringToTimestamp, timestampToDate, timestampToString} from "../../../api/parser";
+import {dateToTimestamp, timestampToDate} from "../../../api/parser";
 import FormField from "../form-entries/FormField";
 import DeleteBlock from "../form-entries/DeleteBlock";
 import {ChildWindowContext} from "../../context-providers/ChildWindowProvider";
@@ -23,6 +23,7 @@ type Errors = {
     name: string,
     typeId: string,
     date: string,
+
 }
 
 

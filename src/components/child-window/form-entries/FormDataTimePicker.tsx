@@ -5,7 +5,8 @@ type FormFieldProps = {
     label: string;
     value: Date | null;
     onChange: Dispatch<SetStateAction<Date | null>>;
-    defaultHours: number;
+    defaultHours?: number;
+    disabled?: boolean;
     children?: React.ReactNode;
 }
 
@@ -25,4 +26,4 @@ const FormDataTimePicker = ({label, value, onChange, defaultHours, children}: Fo
     </div>
 );
 
-export default  FormDataTimePicker;
+export default FormDataTimePicker;

@@ -14,13 +14,14 @@ import {
 import useModal from "../../modal-window/useModal";
 import {ChildWindowContext} from "../../context-providers/ChildWindowProvider";
 import {useMutation, useQuery, useQueryClient} from "react-query";
-import {stringToTimestamp, timestampToString} from "../../../api/parser";
+import {dateToTimestamp, timestampToDate} from "../../../api/parser";
 import {TypesContext} from "../../context-providers/TypesProvider";
 import FormSelectField from "../form-entries/FormSelectField";
 import DeleteBlock from "../form-entries/DeleteBlock";
 import Loader from "../../Loader";
 import {Message, MessageData, SampleMessage, SampleMessageData} from "../../../api/types";
 import ErrorBlock from "../form-entries/ErrorBlock";
+import FormDataTimePicker from "../form-entries/FormDataTimePicker";
 
 type CombineMessage = Message | SampleMessage;
 
@@ -46,7 +47,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
     const [theme, setTheme] = useState('');
     const [messageText, setMessageText] = useState('');
     const [mediaPath, setMediaPath] = useState('');
-    const [sendingDate, setSendingDate] = useState('');
+    const [sendingDate, setSendingDate] = useState<Date | null>(null);
     const [recipientTypeId, setRecipientTypeId] = useState<number | ''>('');
     const [sampleName, setSampleName] = useState('');
     const [isImmediateSend, setIsImmediateSend] = useState(false);
@@ -64,7 +65,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
         setTheme('');
         setMessageText('');
         setMediaPath('');
-        setSendingDate('');
+        setSendingDate(null);
         setRecipientTypeId('');
         if (isSample) setSampleName('');
     };
@@ -80,7 +81,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
                 setMessageText(data.message_text);
                 if (data.recipient_type_id) setRecipientTypeId(data.recipient_type_id);
                 if (data.media_path) setMediaPath(data.media_path);
-                if (data.sending_date) setSendingDate(timestampToString(data.sending_date));
+                if (data.sending_date) setSendingDate(timestampToDate(data.sending_date));
                 if (isSample && 'sample_name' in data) setSampleName(data.sample_name);
             },
             onError: (error: Error) => handleOpenModal(`Ошибка: ${error.message}`, undefined, closeAllWindows)
@@ -117,15 +118,15 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
             isValid = false;
         }
 
-        const now = new Date().getTime() ;
-        const sendingDateTimestamp = stringToTimestamp(sendingDate);
+        const now = new Date().getTime();
+        const sendingDateTimestamp = sendingDate && dateToTimestamp(sendingDate);
 
         if (sendingDateTimestamp === null) {
             newErrors.sending_date = 'Заполните дату отправки рассылки';
             isValid = false;
         }
 
-        if (sendingDateTimestamp < (now - 10 * 60 * 1000)) {
+        if (sendingDateTimestamp && sendingDateTimestamp < (now - 10 * 60 * 1000)) {
             newErrors.sending_date = 'Дата отправки должна быть в будущем';
             isValid = false;
         }
@@ -190,7 +191,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
             message_text: messageText,
             recipient_type_id: recipientTypeId || null,
             media_path: mediaPath || null,
-            sending_date: stringToTimestamp(sendingDate),
+            sending_date: sendingDate && dateToTimestamp(sendingDate) ,
         };
         if (isImmediateSend) {
             useSendMessageMutation.mutate(data);
@@ -207,7 +208,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
                 message_text: messageText,
                 recipient_type_id: recipientTypeId || null,
                 media_path: mediaPath || null,
-                sending_date: stringToTimestamp(sendingDate),
+                sending_date: sendingDate && dateToTimestamp(sendingDate),
                 ...(isSample && {sample_name: sampleName})
             };
             if (isImmediateSend && !isItUpdate && !isSample) {
@@ -223,7 +224,7 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
     const handleSetNow = () => {
         setIsImmediateSend(prevState => !prevState);
         const now = new Date();
-        setSendingDate(new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16));
+        setSendingDate(new Date(now.getTime() - now.getTimezoneOffset() * 60000));
     }
 
     const handleFileSelect = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -284,22 +285,18 @@ const MessageForm: React.FC<{ id: number; isSample?: boolean }> = ({id, isSample
                     >Файл
                     </button>
                 </FormField>
-                <FormField
-                    id="sending_date"
+                <FormDataTimePicker
                     label="Дата отправки"
-                    type="datetime-local"
                     disabled={isImmediateSend}
                     value={sendingDate}
-                    onChange={(e) => setSendingDate(e.target.value)}
-                    onKeyDown={(e) => e.preventDefault()}
-                    onPaste={(e) => e.preventDefault()}
+                    onChange={setSendingDate}
                 >
                     <button
                         type="button" onClick={handleSetNow}
                         className="bg-cyan-600 text-white w-full px-2 rounded-md border border-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         {isImmediateSend ? 'Потом' : 'Сразу'}
                     </button>
-                </FormField>
+                </FormDataTimePicker>
                 {errors.sending_date && <ErrorBlock>{errors.sending_date}</ErrorBlock>}
                 <FormSelectField id="recipient_type_id" label="Тип получателя" value={recipientTypeId || ''}
                                  onChange={(e) => setRecipientTypeId(parseInt(e.target.value))}

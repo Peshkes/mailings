@@ -18,6 +18,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "asar": true,
+        "extraResource":"./server/api/db/dev.mailing.db3",
         "icon": "./src/assets/vp"
       },
       "makers": [
@@ -62,7 +64,6 @@
     }
   },
   "dependencies": {
-    "axios": "^1.7.5",
     "browserify-fs": "^1.0.0",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
@@ -101,6 +102,7 @@
     "autoprefixer": "^10.4.20",
     "css-loader": "^7.1.2",
     "electron": "^32.0.1",
+    "electron-builder": "^25.1.8",
     "html-webpack-plugin": "^5.6.0",
     "nodemon": "^3.1.4",
     "postcss": "^8.4.41",
