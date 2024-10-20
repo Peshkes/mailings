@@ -47,7 +47,7 @@ async function gateCreateWindowWithLicense(createWindow) {
 
         if (result.error) {
             electronAlert('Ошибка', result.error).then(
-                () => app.quit()
+                () => _event.sender.send('GATE_BAD_RESPONSE', result.error)
             );
         } else {
             electronAlert('Успешно', "Ваша лицензия действительна до " + new Date(result.expired_at).toString())
