@@ -32,7 +32,7 @@ const DateTimePicker = ({ checkDate, setCheckDate, defaultHours }: DateTimePicke
             locale={ru}
             timeFormat="HH:mm"
             calendarStartDay={1}
-            className={`w-full pl-1 border border-cyan-800/40 rounded-md focus:ring-2 focus:ring-cyan-800 focus:border-cyan-500 transition duration-200`}
+            className={`w-full pl-1 border border-cyan-800/40 rounded-md`}
             calendarClassName="bg-white border border-cyan-800 rounded-lg"
             dayClassName={() => 'rounded-md hover:bg-cyan-100 transition duration-200'}
             popperClassName="z-10"

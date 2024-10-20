@@ -15,10 +15,10 @@ const FormDataTimePicker = ({label, value, onChange, defaultHours, children}: Fo
         <label className="text-cyan-800 font-semibold col-span-1">
             {label}
         </label>
-        <div className={`flex items-center col-span-2 ${children ? 'space-x-2' : ''}`}>
+        <div className={`flex items-center col-span-2`}>
             <DataTimePicker  checkDate={value} setCheckDate={onChange} defaultHours={defaultHours} />
             {children && (
-                <div className="min-w-[80px] flex items-center">
+                <div className="min-w-[80px] flex items-center ml-2">
                     {children}
                 </div>
             )}
