@@ -1,4 +1,6 @@
 import db from "../api/db/dbConfig.js";
+import {sendMessageImmediately} from "./sendingService.js";
+import {sendTelegramMessage} from "./telegramService.js";
 
 /**
  * Добавляет клиента в базу данных.
@@ -355,6 +357,20 @@ export async function getFilteredClients({page, limit, type_id, search_type, sea
                 limit,
             },
         };
+    } catch (err) {
+        throw new Error(`Failed to retrieve clients: ${err.message}`);
+    }
+}
+
+export async function checkClientExpired() {
+    try {
+        const clients = await db('clients').where('check_out_date', '<', new Date()).select('*');
+        if (clients.length > 0) {
+            clients.forEach(client => {
+                client.chat_id && sendTelegramMessage(client.chat_id, "Ваша подписка на новости истекла. Рады увидеть вас снова. Если вы еще находитесь в отеле, обратитесь на рецепшен.");
+                deleteClient(client.id);
+            })
+        }
     } catch (err) {
         throw new Error(`Failed to retrieve clients: ${err.message}`);
     }

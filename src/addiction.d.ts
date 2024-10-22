@@ -15,3 +15,5 @@ declare global {
         };
     }
 }
+
+declare module 'lodash';

@@ -12,7 +12,6 @@ const TypeFilterBlock = () => {
         setTypeId(type_id);
     }
 
-   
     return (
         <MailingFilter header={"Фильтр по типу"}>
             {clientTypes.length > 0 && clientTypes.map(item => (

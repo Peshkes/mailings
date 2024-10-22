@@ -1,5 +1,12 @@
 import express from 'express';
-import {getRecipientTypes, getMessengerTypes, updateSettings, getSettings} from "../services/utilityService.js";
+import {
+    getRecipientTypes,
+    getMessengerTypes,
+    updateSettings,
+    getSettings,
+    updateRecipientTypes
+} from "../services/utilityService.js";
+import emitter from "../api/emmiter.js";
 const router = express.Router();
 
 router.get('/recipient-types', async (req, res) => {
@@ -12,6 +19,16 @@ router.get('/recipient-types', async (req, res) => {
         }
     } catch (err) {
         res.status(500).json({status: 'Failed to find types: ' + err.message});
+    }
+});
+
+router.put('/recipient-types', async (req, res) => {
+    try {
+        await updateRecipientTypes(req.body);
+        emitter.emit('update', 'recipient-types');
+        res.status(200).json({status: 'Types updated'});
+    } catch (err) {
+        res.status(500).json({status: 'Failed to update types: ' + err.message});
     }
 });
 

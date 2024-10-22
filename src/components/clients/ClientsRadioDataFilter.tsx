@@ -2,8 +2,9 @@ import React from 'react';
 
 
 import {useClientFilter} from "../../stores/useClientFilter";
-import RadioDataFilter from "./RadioDataFilter";
+import RadioTypeFilter from "./RadioDataFilter";
 import RadioButton from "../common-components/RadioButton";
+import RadioDataFilter from "./RadioDataFilter";
 
 type Props = {
     header: string

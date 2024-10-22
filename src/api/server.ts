@@ -245,6 +245,10 @@ export async function getRecipientTypes(): Promise<ClientType[]> {
     return request(`/utility/recipient-types`);
 }
 
+export async function updateRecipientTypes(newRecipientTypes: ClientType[]): Promise<StatusResponse> {
+    return request('/utility/recipient-types', 'PUT', newRecipientTypes);
+}
+
 export async function getSettings(): Promise<Settings> {
     return request('/utility/settings');
 }

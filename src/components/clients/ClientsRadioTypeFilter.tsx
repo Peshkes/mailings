@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import RadioTypeFilter from "./RadioTypeFilter";
 
 import {TypesContext} from "../context-providers/TypesProvider";
 import {useClientFilter} from "../../stores/useClientFilter";
 import RadioButton from "../common-components/RadioButton";
+import RadioDataFilter from "./RadioDataFilter";
 
 type Props = {
     header: string
@@ -18,11 +18,11 @@ const ClientsRadioTypeFilter = ({header}:Props) => {
     }
 
     return (
-        <RadioTypeFilter  header={header}>
+        <RadioDataFilter  header={header}>
             {clientTypes.length > 0 && clientTypes.map(item  => (
                 <RadioButton name={'client_type_filter'}  onChange={() => handleSetTypeId(item.id)} value={item.type_name} checked={type_id === item.id} key={item.id}/>
             ))}
-        </RadioTypeFilter>
+        </RadioDataFilter>
 
     );
 };

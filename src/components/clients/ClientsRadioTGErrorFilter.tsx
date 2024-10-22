@@ -1,16 +1,15 @@
 import React from 'react';
-
-import RadioTGErrorFilter from "./RadioTypeFilter";
 import {useClientFilter} from "../../stores/useClientFilter";
 import RadioButton from "../common-components/RadioButton";
+import RadioDataFilter from "./RadioDataFilter";
 
 type Props = {
     header: string
 }
-const ClientsRadioTGErrorFilter = ({header}:Props) => {
+const ClientsRadioTGErrorFilter = ({header}: Props) => {
     const obj = [
-        {id:true,value:"Да"},
-        {id:false,value:"Нет"}];
+        {id: true, value: "Да"},
+        {id: false, value: "Нет"}];
 
     const {tg_error, isTgError} = useClientFilter();
 
@@ -18,11 +17,12 @@ const ClientsRadioTGErrorFilter = ({header}:Props) => {
         isTgError(tg_error);
     }
     return (
-        <RadioTGErrorFilter header={header}>
-            {obj.map((item,index)  => (
-                <RadioButton name={'client_tg_error_filter'}  onChange={() => handleSetTgError(item.id)} value={item.value} checked={tg_error === item.id} key={index+1}/>
+        <RadioDataFilter header={header}>
+            {obj.map((item, index) => (
+                <RadioButton name={'client_tg_error_filter'} onChange={() => handleSetTgError(item.id)}
+                             value={item.value} checked={tg_error === item.id} key={index + 1}/>
             ))}
-        </RadioTGErrorFilter>
+        </RadioDataFilter>
 
     );
 };

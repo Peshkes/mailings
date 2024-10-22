@@ -2,6 +2,7 @@ import { ClientType, MessengerType } from "../../api/types";
 import React, {useEffect, useMemo, useState} from "react";
 import { getMessengerTypes, getRecipientTypes } from "../../api/server";
 import useModal from "../modal-window/useModal";
+import {useQuery} from "react-query";
 
 
 type TypesContextProps = {
@@ -27,36 +28,33 @@ type TypesProviderProps = {
 }
 
 const TypesProvider: React.FC<TypesProviderProps> = ({ children }) => {
-    const [messengerTypes, setMessengerTypes] = useState<MessengerType[]>([]);
-    const [clientTypes, setClientTypes] = useState<ClientType[]>([]);
     const { handleOpenModal, ModalComponent } = useModal();
 
-    const fetchTypes = async () => {
-        try {
-            const [messengerRes, clientRes] = await Promise.all([
-                getMessengerTypes(),
-                getRecipientTypes()
-            ]);
-            console.log(clientRes)
-            setMessengerTypes(messengerRes);
-            setClientTypes(clientRes);
-        } catch (err) {
+    const { data: messengerTypes = [], error: messengerError, refetch: refetchMessengerTypes } = useQuery({
+        queryKey: ['messengerTypes'],
+        queryFn: getMessengerTypes,
+        onError: () => {
             handleOpenModal(
-                'Ошибка при загрузке данных. Попробуйте снова.',
+                'Ошибка при загрузке данных о мессенджерах. Попробуйте снова.',
                 undefined,
                 undefined,
-                retryFetch
+                refetchMessengerTypes
             );
         }
-    };
+    });
 
-    const retryFetch = () => {
-        fetchTypes();
-    };
-
-    useEffect(() => {
-        fetchTypes();
-    }, []);
+    const { data: clientTypes = [], error: clientError, refetch: refetchClientTypes } = useQuery({
+        queryKey: ['recipient-types'],
+        queryFn: getRecipientTypes,
+        onError: () => {
+            handleOpenModal(
+                'Ошибка при загрузке данных о клиентах. Попробуйте снова.',
+                undefined,
+                undefined,
+                refetchClientTypes
+            );
+        }
+    });
 
     const value = useMemo(() => ({
         messengerTypes,

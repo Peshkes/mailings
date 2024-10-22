@@ -5,13 +5,23 @@ import clientRoutes from '../routes/clientRouter.js';
 import messageRoutes from '../routes/messageRouter.js';
 import utilityRoutes from '../routes/utilityRouter.js';
 import cron from 'node-cron';
-import { sendScheduledMessages } from '../services/sendingService.js';
+import {sendScheduledMessages} from '../services/sendingService.js';
 import emitter from "./emmiter.js";
+import {checkClientExpired} from "../services/clientService.js";
 
 cron.schedule('* * * * *', async () => {
     console.log('Checking for scheduled messages...');
     const result = await sendScheduledMessages();
     emitter.emit('update', 'messages');
+    if (result) {
+        console.log(result);
+    }
+});
+
+cron.schedule('0 * * * *', async () => {
+    console.log('Checking for clients...');
+    const result = await checkClientExpired();
+    emitter.emit('update', 'clients');
     if (result) {
         console.log(result);
     }
