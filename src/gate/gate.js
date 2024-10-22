@@ -3,8 +3,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader');
 
     const savedKey = localStorage.getItem('licenseKey');
+
     if (savedKey) {
-        console.log()
         window.electron.ipcRenderer.sendWithBody('GATE_SUBMIT', { key: savedKey });
         loader.style.display = 'flex';
     }
