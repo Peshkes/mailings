@@ -28,7 +28,7 @@ const DashBoardComponent = () => {
                         </TableWrapper>
                     </div>
                 </div>
-                <div className="w-full h-[62%] flex">
+                <div className="w-full h-[50%] flex">
                     <div className="w-[55%] mr-4">
                         <TableWrapper title="Последние клиенты" plusFunction={handleOpenClient}>
                             <Clients functionToCall={() => getLastClients(numberOfShownClients)}/>

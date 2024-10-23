@@ -19,7 +19,7 @@ const LatestMailings = () => {
                 <h2 className="text-center text-white mb-2 text-2xl">Ближайшие рассылки</h2>
                 <div className="flex items-center cursor-pointer"><Plus color="white" onClickFunction={handleOpenChildWindow}/></div>
             </div>
-            <div className="w-full h-full overflow-auto scroll-smooth scrollbar-none text-white">
+            <div className="w-full h-full pr-2 overflow-y-auto scroll-smooth scrollbar scrollbar-w-1 scrollbar-thumb-rounded-md scrollbar-track-rounded-md scrollbar-corner-rounded-md scrollbar-thumb-white text-white">
                 <LatestMailingsGenerator/>
             </div>
         </div>
